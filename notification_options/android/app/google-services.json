@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "212910226103",
+    "project_id": "notification-options",
+    "storage_bucket": "notification-options.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:212910226103:android:c955ad14877500038aeb32",
+        "android_client_info": {
+          "package_name": "gabriel.app_test.notification_options"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "212910226103-a8hmhnimb1ve5f3k14jld0ktt96inrcg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCxJm4pOqgLEmXDzDBPXPqm-Co6c5rK3Bs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "212910226103-a8hmhnimb1ve5f3k14jld0ktt96inrcg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

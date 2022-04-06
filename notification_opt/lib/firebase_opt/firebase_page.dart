@@ -1,43 +1,87 @@
 import 'package:flutter/material.dart';
-import 'package:notification_opt/firebase_opt/notification_badge.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 class FirebasePage extends StatefulWidget {
+  const FirebasePage({Key? key}) : super(key: key);
+
   @override
-  _FirebasePageState createState() => _FirebasePageState();
+  State<StatefulWidget> createState() {
+   return _FirebasePageState();
+  }
+
+ 
 }
 
-class _FirebasePageState extends State {
-  late int _totalNotifications;
+class _FirebasePageState extends State<FirebasePage> {
+  int _counter = 0;
+  // It is assumed that all messages contain a data field with the key 'type'
+  Future<void> setupInteractedMessage() async {
+    // Get any messages which caused the application to open from
+    // a terminated state.
+    RemoteMessage? initialMessage =
+        await FirebaseMessaging.instance.getInitialMessage();
 
-  @override
-  void initState() {
-    _totalNotifications = 0;
-    super.initState();
+    // If the message also contains a data property with a "type" of "chat",
+    // navigate to a chat screen
+    if (initialMessage != null) {
+      _handleMessage(initialMessage);
+    }
+
+    // Also handle any interaction when the app is in the background via a
+    // Stream listener
+    FirebaseMessaging.onMessageOpenedApp.listen(_handleMessage);
   }
+  
+  void _handleMessage(RemoteMessage message) {
+    if (message.data['type'] == 'chat') {
+      Navigator.pushNamed(context, '/chat', 
+        
+      );
+    }
+  }
+
+   @override
+  void initState() {
+    super.initState();
+
+    // Run code required to handle interacted messages in an async function
+    // as initState() must not be async
+    setupInteractedMessage();
+  }
+
+  void _incrementCounter() {
+    setState(() {
+      _counter++;
+    });
+  }
+
+  
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Notify'),
+        title: const Text('Teste notificação'),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Text(
-            'App for capturing Firebase Push Notifications',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 20,
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const Text(
+              'You have pushed the button this many times:',
             ),
-          ),
-          const SizedBox(height: 16.0),
-          NotificationBadge(totalNotifications: _totalNotifications),
-         const  SizedBox(height: 16.0),
-          // TODO: add the notification text here
-        ],
+            Text(
+              '$_counter',
+              style: Theme.of(context).textTheme.headline4,
+            ),
+          ],
+        ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _incrementCounter,
+        tooltip: 'Increment',
+        child: const Icon(Icons.add),
+      ), 
     );
   }
 }
